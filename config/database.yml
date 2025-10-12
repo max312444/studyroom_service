@@ -1,0 +1,27 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: 1234
+  host: db
+
+development:
+  adapter: mysql2
+  encoding: utf8mb4
+  database: studyroom_service_development
+  username: root
+  password: 1234
+  host: db
+
+test:
+  adapter: mysql2
+  encoding: utf8mb4
+  database: studyroom_service_test
+  username: root
+  password: 1234
+  host: db
+
+production:
+  <<: *default
+  database: studyroom_service_production
