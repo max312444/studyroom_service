@@ -488,6 +488,9 @@ class RoomExceptionService < Studyroom::RoomExceptionService::Service
   end
 end
 
+require 'grpc/reflection/v1alpha/reflection_pb'
+require 'grpc/reflection/v1alpha/reflection_services_pb'
+
 # gRPC 서버 시작 함수
 def main
   # gRPC 서버 인스턴스 생성
@@ -495,6 +498,10 @@ def main
 
   # 서버 주소 설정 (모든 인터페이스에서 50051 포트로 수신)
   s.add_http2_port('0.0.0.0:50051', :this_port_is_insecure)
+
+  # 리플렉션 서비스 활성화
+  reflection_service = Grpc::Reflection::V1alpha::Reflection::Service.new
+  s.handle(reflection_service)
 
   # 서비스 핸들러 등록
   s.handle(RoomService)

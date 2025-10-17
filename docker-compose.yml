@@ -1,23 +1,30 @@
 version: "3.9"
 
 services:
+  db:
+    image: mysql:8.0
+    container_name: studyroom_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: studyroom_development
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 1234
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
   app:
     build: .
     container_name: studyroom_app
     command: tail -f /dev/null
-    # gRPC 서버를 직접 실행하도록 명령을 변경합니다.
-    # gRPC 서버가 50051 포트에서 수신 대기합니다.
     volumes:
       - .:/studyroom_service
-      # tmp 디렉토리 볼륨 마운트:
-      # Windows 환경에서 권한 문제 발생 시, 호스트의 tmp 디렉토리 대신
-      # Docker가 관리하는 익명 볼륨을 사용하여 컨테이너 내부의 tmp 디렉토리에 마운트합니다.
-      # 이렇게 하면 컨테이너 내부에서 파일 쓰기 권한 문제가 해결됩니다.
       - /studyroom_service/tmp
     working_dir: /studyroom_service
     ports:
       - "3000:3000"
-      - "50051:50051" # gRPC 서버 포트를 외부에 노출합니다.
+      - "50051:50051"
     depends_on:
       - db
       - redis
@@ -28,10 +35,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: 1234
       RAILS_MASTER_KEY: de840449ba36702434883c58f5574809
-      BUNDLE_DEPLOYMENT: 0 # 개발 환경에서 Gemfile.lock 업데이트를 허용합니다.
-    # RAILS_MASTER_KEY 환경 변수:
-    # Rails 애플리케이션의 master.key 파일 접근 권한 문제를 해결하기 위해
-    # master key 값을 환경 변수로 직접 전달합니다.
+      BUNDLE_DEPLOYMENT: 0
     restart: always
 
   redis:
@@ -68,5 +72,3 @@ services:
 
 volumes:
   mysql_data:
-  # tmp-data 명명된 볼륨 정의:
-  # tmp 디렉토리에 익명 볼륨을 사용하도록 변경했으므로, 더 이상 필요하지 않습니다.

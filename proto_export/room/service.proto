@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package studyroom.room.v1;
+
+import "room/room.proto";
+
+// Room 서비스 정의
+service RoomService {
+  // 스터디룸 생성
+  rpc CreateRoom (CreateRoomRequest) returns (CreateRoomResponse);
+  // 특정 스터디룸 조회
+  rpc GetRoom (GetRoomRequest) returns (GetRoomResponse);
+  // 모든 스터디룸 목록 조회
+  rpc ListRooms (ListRoomsRequest) returns (ListRoomsResponse);
+  // 스터디룸 정보 업데이트
+  rpc UpdateRoom (UpdateRoomRequest) returns (UpdateRoomResponse);
+  // 스터디룸 삭제
+  rpc DeleteRoom (DeleteRoomRequest) returns (DeleteRoomResponse);
+}
