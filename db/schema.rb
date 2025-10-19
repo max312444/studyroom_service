@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_12_094328) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_19_122922) do
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "room_id", null: false
     t.datetime "start_time"
@@ -62,7 +62,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_094328) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "department_id"
-    t.integer "minimum_member"
+    t.integer "maximum_member"
     t.integer "status"
     t.index ["department_id"], name: "index_rooms_on_department_id"
   end
