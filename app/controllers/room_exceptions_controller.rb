@@ -1,0 +1,2 @@
+class RoomExceptionsController < ApplicationController
+end

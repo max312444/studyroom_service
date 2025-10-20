@@ -28,7 +28,6 @@ class Reservation < ApplicationRecord
   default_scope { where(deleted_at: nil) }
 
   # 레코드를 "삭제"하는 대신 deleted_at에 현재 시간을 기록합니다.
-  # 레코드를 "삭제"하는 대신 deleted_at에 현재 시간을 기록합니다.
   # deleted_by 인자를 받아 삭제자를 기록합니다.
   def soft_delete(deleted_by: nil)
     update(deleted_at: Time.current, deleted_by: deleted_by)
