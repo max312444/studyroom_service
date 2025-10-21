@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_20_115107) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_21_121541) do
   create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "room_id", null: false
     t.datetime "start_time"
@@ -54,6 +54,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_115107) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "created_by"
+    t.bigint "updated_by"
+    t.bigint "deleted_by"
     t.index ["day_of_week"], name: "index_room_operating_hours_on_day_of_week"
     t.index ["room_id"], name: "index_room_operating_hours_on_room_id"
   end
@@ -62,10 +65,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_115107) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "department_id"
     t.integer "maximum_member"
     t.integer "status"
-    t.index ["department_id"], name: "index_rooms_on_department_id"
+    t.integer "capacity"
+    t.bigint "created_by"
+    t.string "department_name"
   end
 
   add_foreign_key "reservations", "rooms"

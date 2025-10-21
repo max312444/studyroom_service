@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: ->(env) { [200, { "Content-Type" => "text/plain" }, ["Hello from Rails"]] }
 
   # 방 관련
-  resources :rooms, only: [:create, :index]
+  resources :rooms
 
   # 예약 관련
   resources :reservations

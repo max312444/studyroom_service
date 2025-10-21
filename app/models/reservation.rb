@@ -81,22 +81,34 @@ class Reservation < ApplicationRecord
     # 운영 시간이 설정되지 않았거나 소프트 삭제된 경우 예약 불가
     return false if operating_hour.nil? || operating_hour.deleted_at.present?
 
-    # 예약 시작/종료 시간이 운영 시간 내에 있는지 확인
-    unless start_time.to_time.between?(operating_hour.opening_time.to_time, operating_hour.closing_time.to_time) &&
-           end_time.to_time.between?(operating_hour.opening_time.to_time, operating_hour.closing_time.to_time)
+    # 예약 시작/종료 시간을 'HH:MM' 형식으로 변환
+    start_time_str = start_time.strftime('%H:%M')
+    end_time_str = end_time.strftime('%H:%M')
+
+    # 운영 시간도 'HH:MM' 형식으로 변환
+    opening_time_str = operating_hour.opening_time.strftime('%H:%M')
+    closing_time_str = operating_hour.closing_time.strftime('%H:%M')
+
+    # 예약 시간이 운영 시간 내에 있는지 확인
+    unless start_time_str >= opening_time_str && end_time_str <= closing_time_str
       return false
     end
 
     # 휴일 예외 확인
     room_exception = room.room_exceptions.find_by(holiday_date: start_time.to_date)
 
-    if room_exception.present? && room_exception.deleted_at.nil? # 휴일 예외가 있고 소프트 삭제되지 않은 경우
-      if room_exception.opening_time.present? && room_exception.closing_time.present? # 특별 운영 시간이 있는 경우
-        unless start_time.to_time.between?(room_exception.opening_time.to_time, room_exception.closing_time.to_time) &&
-               end_time.to_time.between?(room_exception.opening_time.to_time, room_exception.closing_time.to_time)
+    if room_exception.present? && room_exception.deleted_at.nil?
+      if room_exception.opening_time.present? && room_exception.closing_time.present?
+        # 특별 운영 시간도 'HH:MM' 형식으로 변환
+        exception_opening_time_str = room_exception.opening_time.strftime('%H:%M')
+        exception_closing_time_str = room_exception.closing_time.strftime('%H:%M')
+
+        # 예약 시간이 특별 운영 시간 내에 있는지 확인
+        unless start_time_str >= exception_opening_time_str && end_time_str <= exception_closing_time_str
           return false
         end
-      else # 특별 운영 시간이 없으면 휴일이므로 예약 불가
+      else
+        # 특별 운영 시간이 없으면 휴일이므로 예약 불가
         return false
       end
     end
