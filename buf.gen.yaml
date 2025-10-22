@@ -1,8 +1,6 @@
 version: v2
-inputs:
-  - module: buf.build/bannote/studyroom-service
 plugins:
   - remote: buf.build/protocolbuffers/ruby
-    out: app/grpc
+    out: grpc_service/lib
   - remote: buf.build/grpc/ruby
-    out: app/grpc
+    out: grpc_service/lib

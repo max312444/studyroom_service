@@ -1,13 +1,18 @@
 version: v2
+
 modules:
-  - path: proto/
+  - path: proto
     name: buf.build/bannote/reservation-consumer
+
 deps:
   - buf.build/bannote/studyroom-service
+
 lint:
   use:
-    - DEFAULT
+    - STANDARD
+  except:
+    - PACKAGE_DIRECTORY_MATCH
+
 breaking:
   use:
     - FILE
-  

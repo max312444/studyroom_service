@@ -2,5 +2,5 @@
 version: v2
 deps:
   - name: buf.build/bannote/studyroom-service
-    commit: e57f8c6c16bf44efb85f447898573cf1
-    digest: b5:0745bf4b0ca473e88b30eb58fe37f739c3ff231bb59ce1b1402999db93e381a277bf7fe4a85c26af18556a537f434c0d0c7c22add4c10f46c363738c65c41547
+    commit: bc45f241cd51487ea4ed9fb5e9398667
+    digest: b5:ed59a1ea4f1c574b10def089253a31e432d21d363d69c5bae01d506daac7e0f04d82dc65045bf11b7e93fdc2f4767217cbe1e8934b3b641a11af626ea6952647
