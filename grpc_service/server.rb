@@ -44,39 +44,49 @@ module Studyroom
       class RoomServiceHandler < RoomService::Service
         # 룸 생성
         def create_room(request, _call)
-          room = Room.new(
-            id: 1,
+          # 유효성 검사
+          if request.name.nil? || request.name.strip.empty?
+            raise GRPC::InvalidArgument, "Room name is required."
+          end
+
+          # DB 저장
+          room = ::Room.create!(
             name: request.name,
             capacity: request.capacity,
-            location: request.location
+            location: request.location # 이건 DB에 없던거 같은데 일단 함
           )
-          CreateRoomResponse.new(room: room)
+
+          # gRPC 응답 메시지
+          Studyroom::Room::V1::CreateRoomResponse.new(
+            room: Studyroom::Room::V1::Room.new(
+              id: room.id,
+              name: room.name,
+              capacity: room.capacity,
+              location: room.location
+            )
+          )
+
+        rescue ActiveRecord::RecordInvalid => e
+          # 유효성 검사 실패 시
+          raise GRPC::InvalidArgument, e.message
+        raise => e
+          # 기타 에러
+          raise GRPC::Internal, "Failed to create room: #{e.message}"
         end
 
         # 룸 단일 조회
         def get_room(request, _call)
-          room = Room.new(
-            id: request.id,
-            name: "스터디룸 A",
-            capacity: 6,
-            location: "2층"
-          )
-          GetRoomResponse.new(room: room)
+
         end
 
         # 룸 목록 조회
         def list_rooms(_request, _call)
-          rooms = [
-            Room.new(id: 1, name: "스터디룸 A", capacity: 6, location: "2층"),
-            Room.new(id: 2, name: "스터디룸 B", capacity: 8, location: "3층")
-          ]
-          ListRoomsResponse.new(rooms: rooms)
+
         end
 
         # 룸 삭제
         def delete_room(request, _call)
-          puts "Deleted room id: #{request.id}"
-          DeleteRoomResponse.new
+
         end
       end
     end
