@@ -23,7 +23,7 @@ services:
     working_dir: /studyroom_service
     ports:
       - "3000:3000"
-      - "50051:50051"
+      - "50052:50052"
     depends_on:
       - db
       - redis

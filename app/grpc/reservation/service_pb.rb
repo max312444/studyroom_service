@@ -7,14 +7,16 @@ require 'google/protobuf'
 require 'reservation/reservation_pb'
 
 
-descriptor_data = "\n\x19reservation/service.proto\x12\x18studyroom.reservation.v1\x1a\x1dreservation/reservation.proto2\xfe\x04\n\x12ReservationService\x12|\n\x11\x43reateReservation\x12\x32.studyroom.reservation.v1.CreateReservationRequest\x1a\x33.studyroom.reservation.v1.CreateReservationResponse\x12s\n\x0eGetReservation\x12/.studyroom.reservation.v1.GetReservationRequest\x1a\x30.studyroom.reservation.v1.GetReservationResponse\x12y\n\x10ListReservations\x12\x31.studyroom.reservation.v1.ListReservationsRequest\x1a\x32.studyroom.reservation.v1.ListReservationsResponse\x12|\n\x11UpdateReservation\x12\x32.studyroom.reservation.v1.UpdateReservationRequest\x1a\x33.studyroom.reservation.v1.UpdateReservationResponse\x12|\n\x11\x44\x65leteReservation\x12\x32.studyroom.reservation.v1.DeleteReservationRequest\x1a\x33.studyroom.reservation.v1.DeleteReservationResponseb\x06proto3"
+descriptor_data = "\n\x19reservation/service.proto\x12\'bannote.studyroomservice.reservation.v1\x1a\x1dreservation/reservation.proto2\x99\x06\n\x12ReservationService\x12\x9a\x01\n\x11\x43reateReservation\x12\x41.bannote.studyroomservice.reservation.v1.CreateReservationRequest\x1a\x42.bannote.studyroomservice.reservation.v1.CreateReservationResponse\x12\x91\x01\n\x0eGetReservation\x12>.bannote.studyroomservice.reservation.v1.GetReservationRequest\x1a?.bannote.studyroomservice.reservation.v1.GetReservationResponse\x12\x97\x01\n\x10ListReservations\x12@.bannote.studyroomservice.reservation.v1.ListReservationsRequest\x1a\x41.bannote.studyroomservice.reservation.v1.ListReservationsResponse\x12\x9a\x01\n\x11UpdateReservation\x12\x41.bannote.studyroomservice.reservation.v1.UpdateReservationRequest\x1a\x42.bannote.studyroomservice.reservation.v1.UpdateReservationResponse\x12\x9a\x01\n\x11\x44\x65leteReservation\x12\x41.bannote.studyroomservice.reservation.v1.DeleteReservationRequest\x1a\x42.bannote.studyroomservice.reservation.v1.DeleteReservationResponseB\xfa\x01\n+com.bannote.studyroomservice.reservation.v1B\x0cServiceProtoP\x01\xa2\x02\x03\x42SR\xaa\x02\'Bannote.Studyroomservice.Reservation.V1\xca\x02\'Bannote\\Studyroomservice\\Reservation\\V1\xe2\x02\x33\x42\x61nnote\\Studyroomservice\\Reservation\\V1\\GPBMetadata\xea\x02*Bannote::Studyroomservice::Reservation::V1b\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)
 
-module Studyroom
-  module Reservation
-    module V1
+module Bannote
+  module Studyroomservice
+    module Reservation
+      module V1
+      end
     end
   end
 end

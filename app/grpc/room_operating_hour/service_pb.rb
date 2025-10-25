@@ -7,14 +7,16 @@ require 'google/protobuf'
 require 'room_operating_hour/room_operating_hour_pb'
 
 
-descriptor_data = "\n!room_operating_hour/service.proto\x12 studyroom.room_operating_hour.v1\x1a-room_operating_hour/room_operating_hour.proto2\xb3\x06\n\x18RoomOperatingHourService\x12\x9e\x01\n\x17\x43reateRoomOperatingHour\x12@.studyroom.room_operating_hour.v1.CreateRoomOperatingHourRequest\x1a\x41.studyroom.room_operating_hour.v1.CreateRoomOperatingHourResponse\x12\x95\x01\n\x14GetRoomOperatingHour\x12=.studyroom.room_operating_hour.v1.GetRoomOperatingHourRequest\x1a>.studyroom.room_operating_hour.v1.GetRoomOperatingHourResponse\x12\x9b\x01\n\x16ListRoomOperatingHours\x12?.studyroom.room_operating_hour.v1.ListRoomOperatingHoursRequest\x1a@.studyroom.room_operating_hour.v1.ListRoomOperatingHoursResponse\x12\x9e\x01\n\x17UpdateRoomOperatingHour\x12@.studyroom.room_operating_hour.v1.UpdateRoomOperatingHourRequest\x1a\x41.studyroom.room_operating_hour.v1.UpdateRoomOperatingHourResponse\x12\x9e\x01\n\x17\x44\x65leteRoomOperatingHour\x12@.studyroom.room_operating_hour.v1.DeleteRoomOperatingHourRequest\x1a\x41.studyroom.room_operating_hour.v1.DeleteRoomOperatingHourResponseb\x06proto3"
+descriptor_data = "\n!room_operating_hour/service.proto\x12-bannote.studyroomservice.roomoperatinghour.v1\x1a-room_operating_hour/room_operating_hour.proto2\xb5\x07\n\x18RoomOperatingHourService\x12\xb8\x01\n\x17\x43reateRoomOperatingHour\x12M.bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourRequest\x1aN.bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourResponse\x12\xaf\x01\n\x14GetRoomOperatingHour\x12J.bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourRequest\x1aK.bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourResponse\x12\xb5\x01\n\x16ListRoomOperatingHours\x12L.bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursRequest\x1aM.bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursResponse\x12\xb8\x01\n\x17UpdateRoomOperatingHour\x12M.bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourRequest\x1aN.bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourResponse\x12\xb8\x01\n\x17\x44\x65leteRoomOperatingHour\x12M.bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourRequest\x1aN.bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourResponseB\x98\x02\n1com.bannote.studyroomservice.roomoperatinghour.v1B\x0cServiceProtoP\x01\xa2\x02\x03\x42SR\xaa\x02-Bannote.Studyroomservice.Roomoperatinghour.V1\xca\x02-Bannote\\Studyroomservice\\Roomoperatinghour\\V1\xe2\x02\x39\x42\x61nnote\\Studyroomservice\\Roomoperatinghour\\V1\\GPBMetadata\xea\x02\x30\x42\x61nnote::Studyroomservice::Roomoperatinghour::V1b\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)
 
-module Studyroom
-  module RoomOperatingHour
-    module V1
+module Bannote
+  module Studyroomservice
+    module Roomoperatinghour
+      module V1
+      end
     end
   end
 end

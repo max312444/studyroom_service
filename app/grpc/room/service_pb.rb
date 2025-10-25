@@ -7,14 +7,16 @@ require 'google/protobuf'
 require 'room/room_pb'
 
 
-descriptor_data = "\n\x12room/service.proto\x12\x11studyroom.room.v1\x1a\x0froom/room.proto2\xc8\x03\n\x0bRoomService\x12Y\n\nCreateRoom\x12$.studyroom.room.v1.CreateRoomRequest\x1a%.studyroom.room.v1.CreateRoomResponse\x12P\n\x07GetRoom\x12!.studyroom.room.v1.GetRoomRequest\x1a\".studyroom.room.v1.GetRoomResponse\x12V\n\tListRooms\x12#.studyroom.room.v1.ListRoomsRequest\x1a$.studyroom.room.v1.ListRoomsResponse\x12Y\n\nUpdateRoom\x12$.studyroom.room.v1.UpdateRoomRequest\x1a%.studyroom.room.v1.UpdateRoomResponse\x12Y\n\nDeleteRoom\x12$.studyroom.room.v1.DeleteRoomRequest\x1a%.studyroom.room.v1.DeleteRoomResponseb\x06proto3"
+descriptor_data = "\n\x12room/service.proto\x12 bannote.studyroomservice.room.v1\x1a\x0froom/room.proto2\xde\x04\n\x0bRoomService\x12w\n\nCreateRoom\x12\x33.bannote.studyroomservice.room.v1.CreateRoomRequest\x1a\x34.bannote.studyroomservice.room.v1.CreateRoomResponse\x12n\n\x07GetRoom\x12\x30.bannote.studyroomservice.room.v1.GetRoomRequest\x1a\x31.bannote.studyroomservice.room.v1.GetRoomResponse\x12t\n\tListRooms\x12\x32.bannote.studyroomservice.room.v1.ListRoomsRequest\x1a\x33.bannote.studyroomservice.room.v1.ListRoomsResponse\x12w\n\nUpdateRoom\x12\x33.bannote.studyroomservice.room.v1.UpdateRoomRequest\x1a\x34.bannote.studyroomservice.room.v1.UpdateRoomResponse\x12w\n\nDeleteRoom\x12\x33.bannote.studyroomservice.room.v1.DeleteRoomRequest\x1a\x34.bannote.studyroomservice.room.v1.DeleteRoomResponseB\xd7\x01\n$com.bannote.studyroomservice.room.v1B\x0cServiceProtoP\x01\xa2\x02\x03\x42SR\xaa\x02 Bannote.Studyroomservice.Room.V1\xca\x02 Bannote\\Studyroomservice\\Room\\V1\xe2\x02,Bannote\\Studyroomservice\\Room\\V1\\GPBMetadata\xea\x02#Bannote::Studyroomservice::Room::V1b\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)
 
-module Studyroom
-  module Room
-    module V1
+module Bannote
+  module Studyroomservice
+    module Room
+      module V1
+      end
     end
   end
 end

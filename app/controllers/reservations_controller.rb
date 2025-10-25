@@ -38,15 +38,6 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(
-      :room_id,
-      :user_id,      # 예약 대상자
-      :group_id,
-      :purpose,
-      :priority,
-      :created_by,   # 예약 생성자
-      :start_time,
-      :end_time
-    )
+    params.permit(:room_id, :user_id, :start_time, :end_time)
   end
 end

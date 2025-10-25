@@ -7,14 +7,16 @@ require 'google/protobuf'
 require 'room_exception/room_exception_pb'
 
 
-descriptor_data = "\n\x1croom_exception/service.proto\x12\x1bstudyroom.room_exception.v1\x1a#room_exception/room_exception.proto2\xc0\x05\n\x14RoomExceptionService\x12\x88\x01\n\x13\x43reateRoomException\x12\x37.studyroom.room_exception.v1.CreateRoomExceptionRequest\x1a\x38.studyroom.room_exception.v1.CreateRoomExceptionResponse\x12\x7f\n\x10GetRoomException\x12\x34.studyroom.room_exception.v1.GetRoomExceptionRequest\x1a\x35.studyroom.room_exception.v1.GetRoomExceptionResponse\x12\x85\x01\n\x12ListRoomExceptions\x12\x36.studyroom.room_exception.v1.ListRoomExceptionsRequest\x1a\x37.studyroom.room_exception.v1.ListRoomExceptionsResponse\x12\x88\x01\n\x13UpdateRoomException\x12\x37.studyroom.room_exception.v1.UpdateRoomExceptionRequest\x1a\x38.studyroom.room_exception.v1.UpdateRoomExceptionResponse\x12\x88\x01\n\x13\x44\x65leteRoomException\x12\x37.studyroom.room_exception.v1.DeleteRoomExceptionRequest\x1a\x38.studyroom.room_exception.v1.DeleteRoomExceptionResponseb\x06proto3"
+descriptor_data = "\n\x1croom_exception/service.proto\x12)bannote.studyroomservice.roomexception.v1\x1a#room_exception/room_exception.proto2\xcd\x06\n\x14RoomExceptionService\x12\xa4\x01\n\x13\x43reateRoomException\x12\x45.bannote.studyroomservice.roomexception.v1.CreateRoomExceptionRequest\x1a\x46.bannote.studyroomservice.roomexception.v1.CreateRoomExceptionResponse\x12\x9b\x01\n\x10GetRoomException\x12\x42.bannote.studyroomservice.roomexception.v1.GetRoomExceptionRequest\x1a\x43.bannote.studyroomservice.roomexception.v1.GetRoomExceptionResponse\x12\xa1\x01\n\x12ListRoomExceptions\x12\x44.bannote.studyroomservice.roomexception.v1.ListRoomExceptionsRequest\x1a\x45.bannote.studyroomservice.roomexception.v1.ListRoomExceptionsResponse\x12\xa4\x01\n\x13UpdateRoomException\x12\x45.bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionRequest\x1a\x46.bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionResponse\x12\xa4\x01\n\x13\x44\x65leteRoomException\x12\x45.bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionRequest\x1a\x46.bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionResponseB\x84\x02\n-com.bannote.studyroomservice.roomexception.v1B\x0cServiceProtoP\x01\xa2\x02\x03\x42SR\xaa\x02)Bannote.Studyroomservice.Roomexception.V1\xca\x02)Bannote\\Studyroomservice\\Roomexception\\V1\xe2\x02\x35\x42\x61nnote\\Studyroomservice\\Roomexception\\V1\\GPBMetadata\xea\x02,Bannote::Studyroomservice::Roomexception::V1b\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)
 
-module Studyroom
-  module RoomException
-    module V1
+module Bannote
+  module Studyroomservice
+    module Roomexception
+      module V1
+      end
     end
   end
 end

@@ -42,6 +42,6 @@ class RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:name, :maximum_member)
+    params.permit(:name, :maximum_member)
   end
 end

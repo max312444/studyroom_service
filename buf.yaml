@@ -1,18 +1,10 @@
 version: v2
-
 modules:
-  - path: proto
-    name: buf.build/bannote/reservation-consumer
-
-deps:
-  - buf.build/bannote/studyroom-service
-
-lint:
-  use:
-    - STANDARD
-  except:
-    - PACKAGE_DIRECTORY_MATCH
-
-breaking:
-  use:
-    - FILE
+  - path: proto_export/user
+    name: buf.build/bannote/user-service
+  - path: proto_export/token
+    name: buf.build/bannote/token-service
+  - path: proto_export/schedule
+    name: buf.build/bannote/schedule-service
+  - path: proto_export/studyroom
+    name: buf.build/bannote/studyroom-service

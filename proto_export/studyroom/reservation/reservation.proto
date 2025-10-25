@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package bannote.studyroomservice.reservation.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// 예약 우선순위
+enum ReservationPriority {
+  RESERVATION_PRIORITY_UNSPECIFIED = 0;
+  RESERVATION_PRIORITY_LOW = 1;
+  RESERVATION_PRIORITY_MEDIUM = 2;
+  RESERVATION_PRIORITY_HIGH = 3;
+}
+
+// 예약 상태 (optional, 향후 확장용)
+enum ReservationStatus {
+  RESERVATION_STATUS_UNSPECIFIED = 0;
+  RESERVATION_STATUS_CONFIRMED = 1;
+  RESERVATION_STATUS_CANCELED = 2;
+  RESERVATION_STATUS_COMPLETED = 3;
+}
+
+// 예약 정보
+message Reservation {
+  int64 id = 1;
+  string code = 2;                            // 외부 식별용 코드 (UUID)
+  int64 room_id = 3;
+  int64 group_id = 4;
+  int64 link_id = 5;
+  google.protobuf.Timestamp start_time = 6;
+  google.protobuf.Timestamp end_time = 7;
+  string purpose = 8;
+  ReservationPriority priority = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+  google.protobuf.Timestamp deleted_at = 12;
+  ReservationStatus status = 13;              // optional
+}
+
+// 생성
+message CreateReservationRequest {
+  int64 room_id = 1;
+  int64 group_id = 2;
+  int64 link_id = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  string purpose = 6;
+  ReservationPriority priority = 7;
+}
+
+message CreateReservationResponse {
+  Reservation reservation = 1;
+}
+
+// 조회
+message GetReservationRequest {
+  string code = 1;
+}
+
+message GetReservationResponse {
+  Reservation reservation = 1;
+}
+
+// 목록
+message ListReservationsRequest {
+  int64 room_id = 1;
+  google.protobuf.Timestamp start_time_after = 2;
+  google.protobuf.Timestamp end_time_before = 3;
+  int64 group_id = 4;
+}
+
+message ListReservationsResponse {
+  repeated Reservation reservations = 1;
+}
+
+// 수정
+message UpdateReservationRequest {
+  string code = 1;
+  int64 room_id = 2;
+  int64 group_id = 3;
+  int64 link_id = 4;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp end_time = 6;
+  string purpose = 7;
+  ReservationPriority priority = 8;
+}
+
+message UpdateReservationResponse {
+  Reservation reservation = 1;
+}
+
+// 삭제
+message DeleteReservationRequest {
+  string code = 1;
+}
+
+message DeleteReservationResponse {
+  bool success = 1;
+  string message = 2;
+}

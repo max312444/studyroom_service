@@ -4,27 +4,31 @@
 
 require 'google/protobuf'
 
+require 'google/protobuf/timestamp_pb'
 
-descriptor_data = "\n\x0froom/room.proto\x12\x11studyroom.room.v1\"\xeb\x01\n\x04Room\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id\x12#\n\rdepartment_id\x18\x02 \x01(\x03R\x0c\x64\x65partmentId\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name\x12%\n\x0eminimum_member\x18\x04 \x01(\x05R\rminimumMember\x12\x35\n\x06status\x18\x05 \x01(\x0e\x32\x1d.studyroom.room.v1.RoomStatusR\x06status\x12\x1d\n\ncreated_at\x18\x06 \x01(\tR\tcreatedAt\x12\x1d\n\nupdated_at\x18\x07 \x01(\tR\tupdatedAt\"\xaa\x01\n\x11\x43reateRoomRequest\x12#\n\rdepartment_id\x18\x01 \x01(\x03R\x0c\x64\x65partmentId\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12%\n\x0eminimum_member\x18\x03 \x01(\x05R\rminimumMember\x12\x35\n\x06status\x18\x04 \x01(\x0e\x32\x1d.studyroom.room.v1.RoomStatusR\x06status\" \n\x0eGetRoomRequest\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id\"\x12\n\x10ListRoomsRequest\"A\n\x12\x43reateRoomResponse\x12+\n\x04room\x18\x01 \x01(\x0b\x32\x17.studyroom.room.v1.RoomR\x04room\">\n\x0fGetRoomResponse\x12+\n\x04room\x18\x01 \x01(\x0b\x32\x17.studyroom.room.v1.RoomR\x04room\"B\n\x11ListRoomsResponse\x12-\n\x05rooms\x18\x01 \x03(\x0b\x32\x17.studyroom.room.v1.RoomR\x05rooms\"A\n\x12UpdateRoomResponse\x12+\n\x04room\x18\x01 \x01(\x0b\x32\x17.studyroom.room.v1.RoomR\x04room\"\x14\n\x12\x44\x65leteRoomResponse\"\xba\x01\n\x11UpdateRoomRequest\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id\x12#\n\rdepartment_id\x18\x02 \x01(\x03R\x0c\x64\x65partmentId\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name\x12%\n\x0eminimum_member\x18\x04 \x01(\x05R\rminimumMember\x12\x35\n\x06status\x18\x05 \x01(\x0e\x32\x1d.studyroom.room.v1.RoomStatusR\x06status\"#\n\x11\x44\x65leteRoomRequest\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id*[\n\nRoomStatus\x12\x1b\n\x17ROOM_STATUS_UNSPECIFIED\x10\x00\x12\x16\n\x12ROOM_STATUS_VACANT\x10\x01\x12\x18\n\x14ROOM_STATUS_OCCUPIED\x10\x02\x62\x06proto3"
+
+descriptor_data = "\n\x0froom/room.proto\x12 bannote.studyroomservice.room.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd5\x02\n\x04Room\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id\x12\'\n\x0f\x64\x65partment_name\x18\x02 \x01(\tR\x0e\x64\x65partmentName\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name\x12%\n\x0eminimum_member\x18\x04 \x01(\x05R\rminimumMember\x12\x44\n\x06status\x18\x05 \x01(\x0e\x32,.bannote.studyroomservice.room.v1.RoomStatusR\x06status\x12\x39\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1d\n\ncreated_by\x18\x08 \x01(\x03R\tcreatedBy\"\xb9\x01\n\x11\x43reateRoomRequest\x12#\n\rdepartment_id\x18\x01 \x01(\x03R\x0c\x64\x65partmentId\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12%\n\x0eminimum_member\x18\x03 \x01(\x05R\rminimumMember\x12\x44\n\x06status\x18\x04 \x01(\x0e\x32,.bannote.studyroomservice.room.v1.RoomStatusR\x06status\"P\n\x12\x43reateRoomResponse\x12:\n\x04room\x18\x01 \x01(\x0b\x32&.bannote.studyroomservice.room.v1.RoomR\x04room\" \n\x0eGetRoomRequest\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id\"M\n\x0fGetRoomResponse\x12:\n\x04room\x18\x01 \x01(\x0b\x32&.bannote.studyroomservice.room.v1.RoomR\x04room\"\x12\n\x10ListRoomsRequest\"Q\n\x11ListRoomsResponse\x12<\n\x05rooms\x18\x01 \x03(\x0b\x32&.bannote.studyroomservice.room.v1.RoomR\x05rooms\"\xc9\x01\n\x11UpdateRoomRequest\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id\x12#\n\rdepartment_id\x18\x02 \x01(\x03R\x0c\x64\x65partmentId\x12\x12\n\x04name\x18\x03 \x01(\tR\x04name\x12%\n\x0eminimum_member\x18\x04 \x01(\x05R\rminimumMember\x12\x44\n\x06status\x18\x05 \x01(\x0e\x32,.bannote.studyroomservice.room.v1.RoomStatusR\x06status\"P\n\x12UpdateRoomResponse\x12:\n\x04room\x18\x01 \x01(\x0b\x32&.bannote.studyroomservice.room.v1.RoomR\x04room\"#\n\x11\x44\x65leteRoomRequest\x12\x0e\n\x02id\x18\x01 \x01(\x03R\x02id\"\x14\n\x12\x44\x65leteRoomResponse*[\n\nRoomStatus\x12\x1b\n\x17ROOM_STATUS_UNSPECIFIED\x10\x00\x12\x16\n\x12ROOM_STATUS_VACANT\x10\x01\x12\x18\n\x14ROOM_STATUS_OCCUPIED\x10\x02\x42\xd4\x01\n$com.bannote.studyroomservice.room.v1B\tRoomProtoP\x01\xa2\x02\x03\x42SR\xaa\x02 Bannote.Studyroomservice.Room.V1\xca\x02 Bannote\\Studyroomservice\\Room\\V1\xe2\x02,Bannote\\Studyroomservice\\Room\\V1\\GPBMetadata\xea\x02#Bannote::Studyroomservice::Room::V1b\x06proto3"
 
 pool = ::Google::Protobuf::DescriptorPool.generated_pool
 pool.add_serialized_file(descriptor_data)
 
-module Studyroom
-  module Room
-    module V1
-      Room = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.Room").msgclass
-      CreateRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.CreateRoomRequest").msgclass
-      GetRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.GetRoomRequest").msgclass
-      ListRoomsRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.ListRoomsRequest").msgclass
-      CreateRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.CreateRoomResponse").msgclass
-      GetRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.GetRoomResponse").msgclass
-      ListRoomsResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.ListRoomsResponse").msgclass
-      UpdateRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.UpdateRoomResponse").msgclass
-      DeleteRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.DeleteRoomResponse").msgclass
-      UpdateRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.UpdateRoomRequest").msgclass
-      DeleteRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.DeleteRoomRequest").msgclass
-      RoomStatus = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("studyroom.room.v1.RoomStatus").enummodule
+module Bannote
+  module Studyroomservice
+    module Room
+      module V1
+        Room = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.Room").msgclass
+        CreateRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.CreateRoomRequest").msgclass
+        CreateRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.CreateRoomResponse").msgclass
+        GetRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.GetRoomRequest").msgclass
+        GetRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.GetRoomResponse").msgclass
+        ListRoomsRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.ListRoomsRequest").msgclass
+        ListRoomsResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.ListRoomsResponse").msgclass
+        UpdateRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.UpdateRoomRequest").msgclass
+        UpdateRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.UpdateRoomResponse").msgclass
+        DeleteRoomRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.DeleteRoomRequest").msgclass
+        DeleteRoomResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.DeleteRoomResponse").msgclass
+        RoomStatus = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("bannote.studyroomservice.room.v1.RoomStatus").enummodule
+      end
     end
   end
 end
