@@ -7,7 +7,11 @@ class Reservation < ApplicationRecord
   # Room 모델과 다대일 관계를 가집니다.
   belongs_to :room
 
+  # Callbacks
+  before_create :generate_code
+
   # 유효성 검사 (Validations)
+  validates :code, presence: true, uniqueness: true
   # group_id, purpose, priority, created_by, start_time, end_time는 필수입니다.
   validates :group_id, presence: true
   validates :purpose, presence: true
@@ -39,6 +43,10 @@ class Reservation < ApplicationRecord
   end
 
   private
+
+  def generate_code
+    self.code = SecureRandom.uuid
+  end
 
   # 시작 시간이 종료 시간보다 빠른지 확인하는 커스텀 유효성 검사
   def start_time_before_end_time
