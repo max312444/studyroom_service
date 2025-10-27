@@ -3,6 +3,8 @@
 require 'reservation/reservation_pb'
 require 'reservation/service_pb'
 require 'reservation/service_services_pb'
+require 'concerns/current'
+require 'concerns/simulated_user_roles'
 
 module Bannote
   module Studyroomservice
@@ -10,6 +12,9 @@ module Bannote
       module V1
         class ReservationServiceHandler < Bannote::Studyroomservice::Reservation::V1::ReservationService::Service
           def create_reservation(request, _call)
+            unless SimulatedUserRoles.has_authority?(Current.user_id, SimulatedUserRoles::AUTHORITY_LEVELS["student"])
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Requires Student authority or higher to create a reservation.")
+            end
             reservation = ::Reservation.new(
               room_id: request.room_id,
               group_id: request.group_id,
@@ -18,7 +23,7 @@ module Bannote
               end_time: request.end_time.to_time,
               purpose: request.purpose,
               priority: request.priority,
-              created_by: 1 # 임시값, 인증 시스템 연동 필요
+              created_by: Current.user_id # 임시값, 인증 시스템 연동 필요
             )
 
             if reservation.save
@@ -31,6 +36,9 @@ module Bannote
           end
 
           def get_reservation(request, _call)
+            unless SimulatedUserRoles.has_authority?(Current.user_id, SimulatedUserRoles::AUTHORITY_LEVELS["student"])
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Requires Student authority or higher to view a reservation.")
+            end
             reservation = ::Reservation.find_by!(code: request.code)
             Bannote::Studyroomservice::Reservation::V1::GetReservationResponse.new(
               reservation: reservation_to_proto(reservation)
@@ -40,6 +48,9 @@ module Bannote
           end
 
           def list_reservations(request, _call)
+            unless SimulatedUserRoles.has_authority?(Current.user_id, SimulatedUserRoles::AUTHORITY_LEVELS["student"])
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Requires Student authority or higher to list reservations.")
+            end
             reservations = ::Reservation.all
             reservations = reservations.where(room_id: request.room_id) if request.room_id.present?
             reservations = reservations.where("start_time >= ?", request.start_time_after.to_time) if request.start_time_after.present?
@@ -52,7 +63,18 @@ module Bannote
           end
 
           def update_reservation(request, _call)
-            reservation = ::Reservation.find_by!(code: request.code)
+            reservation = ::Reservation.find_by!(code: request.code) # Reservation must be found BEFORE authorization check
+
+            user_authority_level = SimulatedUserRoles.get_authority_level(Current.user_id)
+
+            if user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["assistant"]
+              # Assistant or higher can update any reservation
+            elsif user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["student"] && reservation.created_by == Current.user_id
+              # Student or higher can update reservations they created
+            else
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Insufficient authority to update this reservation.")
+            end
+
             reservation.update!(
               room_id: request.room_id,
               group_id: request.group_id,
@@ -61,7 +83,7 @@ module Bannote
               end_time: request.end_time.to_time,
               purpose: request.purpose,
               priority: request.priority,
-              updated_by: 1 # 임시값, 인증 시스템 연동 필요
+              updated_by: Current.user_id # 임시값, 인증 시스템 연동 필요
             )
             Bannote::Studyroomservice::Reservation::V1::UpdateReservationResponse.new(
               reservation: reservation_to_proto(reservation)
@@ -74,7 +96,18 @@ module Bannote
 
           def delete_reservation(request, _call)
             reservation = ::Reservation.find_by!(code: request.code)
-            reservation.soft_delete(deleted_by: 1) # 임시값, 인증 시스템 연동 필요
+
+            user_authority_level = SimulatedUserRoles.get_authority_level(Current.user_id)
+
+            if user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["assistant"]
+              # Assistant or higher can delete any reservation
+            elsif user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["student"] && reservation.created_by == Current.user_id
+              # Student or higher can delete reservations they created
+            else
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Insufficient authority to delete this reservation.")
+            end
+
+            reservation.soft_delete(deleted_by: Current.user_id) # 임시값, 인증 시스템 연동 필요
 
             Bannote::Studyroomservice::Reservation::V1::DeleteReservationResponse.new(success: true)
           rescue ActiveRecord::RecordNotFound

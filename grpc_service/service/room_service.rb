@@ -3,6 +3,8 @@
 require 'room/room_pb'
 require 'room/service_pb'
 require 'room/service_services_pb'
+require 'concerns/current'
+require 'concerns/simulated_user_roles'
 
 module Bannote
   module Studyroomservice
@@ -10,13 +12,17 @@ module Bannote
       module V1
         class RoomServiceHandler < Bannote::Studyroomservice::Room::V1::RoomService::Service
           def create_room(request, _call)
+            unless SimulatedUserRoles.has_authority?(Current.user_id, SimulatedUserRoles::AUTHORITY_LEVELS["assistant"])
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Requires Assistant authority or higher to create a room.")
+            end
+
             # 데이터베이스에서 Room 객체 생성
             new_room = ::Room.create!(
               name: request.name,
               maximum_member: request.minimum_member,
               department_code: request.department_id.to_s,
               department_name: "Unknown", # 임시값, 외부 서비스 연동 필요
-              created_by: 1 # 임시값, 인증 시스템 연동 필요
+              created_by: Current.user_id # 임시값, 인증 시스템 연동 필요
             )
 
             # gRPC 응답 메시지 생성
@@ -29,6 +35,9 @@ module Bannote
           end
 
           def get_room(request, _call)
+            unless SimulatedUserRoles.has_authority?(Current.user_id, SimulatedUserRoles::AUTHORITY_LEVELS["student"])
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Requires Student authority or higher to view a room.")
+            end
             room = ::Room.find(request.id)
 
             Bannote::Studyroomservice::Room::V1::GetRoomResponse.new(
@@ -39,6 +48,9 @@ module Bannote
           end
 
           def list_rooms(_request, _call)
+            unless SimulatedUserRoles.has_authority?(Current.user_id, SimulatedUserRoles::AUTHORITY_LEVELS["student"])
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Requires Student authority or higher to list rooms.")
+            end
             rooms = ::Room.all
             Bannote::Studyroomservice::Room::V1::ListRoomsResponse.new(
               rooms: rooms.map { |room| room_to_proto(room) }
@@ -46,7 +58,14 @@ module Bannote
           end
 
           def update_room(request, _call)
-            room = ::Room.find(request.id)
+            room = ::Room.find(request.id) # Room must be found BEFORE authorization check
+
+            user_authority_level = SimulatedUserRoles.get_authority_level(Current.user_id)
+
+            unless user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["assistant"]
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Requires Assistant authority or higher to update a room.")
+            end
+
             room.update!(
               name: request.name,
               maximum_member: request.minimum_member,
@@ -64,6 +83,17 @@ module Bannote
 
           def delete_room(request, _call)
             room = ::Room.find(request.id)
+
+            user_authority_level = SimulatedUserRoles.get_authority_level(Current.user_id)
+
+            if user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["admin"]
+              # Admin can delete any room
+            elsif user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["assistant"] && room.created_by == Current.user_id
+              # Assistant or higher can delete rooms they created
+            else
+              _call.abort(GRPC::Core::StatusCodes::PERMISSION_DENIED, details: "Permission denied: Insufficient authority to delete this room.")
+            end
+
             room.destroy!
 
             Bannote::Studyroomservice::Room::V1::DeleteRoomResponse.new
