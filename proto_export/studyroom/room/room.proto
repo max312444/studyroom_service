@@ -4,14 +4,18 @@ package bannote.studyroomservice.room.v1;
 
 import "google/protobuf/timestamp.proto";
 
-// 스터디룸 상태 (ENUM)
+// ==========================================
+// ENUM: 스터디룸 상태
+// ==========================================
 enum RoomStatus {
   ROOM_STATUS_UNSPECIFIED = 0; // 지정되지 않음
   ROOM_STATUS_VACANT = 1;      // 공실
   ROOM_STATUS_OCCUPIED = 2;    // 입실
 }
 
-// 스터디룸 메시지 구조
+// ==========================================
+// MESSAGE: Room (스터디룸 구조체)
+// ==========================================
 message Room {
   int64 id = 1;                               // 스터디룸 ID
   string department_code = 2;                 // 학과 코드
@@ -23,7 +27,9 @@ message Room {
   int64 created_by = 8;                       // 생성자
 }
 
-// 생성 요청
+// ==========================================
+// CREATE
+// ==========================================
 message CreateRoomRequest {
   string department_code = 1;
   string name = 2;
@@ -35,7 +41,9 @@ message CreateRoomResponse {
   Room room = 1;
 }
 
-// 단건 조회
+// ==========================================
+// READ (단건 조회)
+// ==========================================
 message GetRoomRequest {
   int64 id = 1;
 }
@@ -44,17 +52,21 @@ message GetRoomResponse {
   Room room = 1;
 }
 
-// 목록 조회
+// ==========================================
+// LIST (전체 목록)
+// ==========================================
 message ListRoomsRequest {}
 
 message ListRoomsResponse {
   repeated Room rooms = 1;
 }
 
-// 수정
+// ==========================================
+// UPDATE
+// ==========================================
 message UpdateRoomRequest {
   int64 id = 1;
-  string department_code = 2;
+  string department_code = 2; 
   string name = 3;
   int32 maximum_member = 4;
   RoomStatus status = 5;
@@ -64,7 +76,9 @@ message UpdateRoomResponse {
   Room room = 1;
 }
 
-// 삭제
+// ==========================================
+// DELETE
+// ==========================================
 message DeleteRoomRequest {
   int64 id = 1;
 }
