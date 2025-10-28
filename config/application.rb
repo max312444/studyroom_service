@@ -11,6 +11,10 @@ module StudyroomService
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    # gRPC generated 파일은 Rails autoload 대상에서 제외
+    config.autoload_paths -= Dir["#{config.root}/app/grpc"]
+    config.eager_load_paths -= Dir["#{config.root}/app/grpc"]
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.

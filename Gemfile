@@ -38,3 +38,5 @@ group :development, :test do
 end
 
 gem 'tzinfo-data'
+
+gem "activesupport", "~> 8.0"

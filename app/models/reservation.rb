@@ -23,8 +23,8 @@ class Reservation < ApplicationRecord
   # 예약 시간 유효성 검사: 시작 시간이 종료 시간보다 빨라야 합니다.
   validate :start_time_before_end_time
 
-  # 예약 가능 여부 및 우선순위 처리 (생성 전에 실행)
-  before_validation :check_and_handle_reservation_conflicts, on: :create
+  # 예약 가능 여부 및 우선순위 처리 (생성 및 수정 전에 실행)
+  before_validation :check_and_handle_reservation_conflicts, on: [:create, :update]
 
   # 소프트 삭제 (Soft Delete)
   # deleted_at 컬럼에 값이 있으면 삭제된 것으로 간주합니다.
@@ -68,8 +68,7 @@ class Reservation < ApplicationRecord
     # 2. 기존 예약과의 충돌 확인
     conflicting_reservations = Reservation.where(room_id: room_id)
                                         .where.not(id: id) # 현재 예약 자신은 제외
-                                        .where.not(deleted_at: nil) # 소프트 삭제된 예약은 제외
-                                        .where("(start_time < ? AND end_time > ?) OR (start_time < ? AND end_time > ?)", end_time, start_time, start_time, start_time)
+                                        .where("start_time < ? AND end_time > ?", end_time, start_time)
 
     conflicting_reservations.each do |existing_reservation|
       if priority > existing_reservation.priority # 새 예약의 우선순위가 더 높은 경우
