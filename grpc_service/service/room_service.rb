@@ -38,7 +38,7 @@ module Bannote
                 created_by: Current.user_id
               )
 
-              # ✅ proto 구조에 맞게 수정 — CreateRoomResponse는 room 필드만 가짐
+              # proto 구조에 맞게 수정 — CreateRoomResponse는 room 필드만 가짐
               Bannote::Studyroomservice::Room::V1::CreateRoomResponse.new(
                 room: room_to_proto(room)
               )
@@ -110,21 +110,23 @@ module Bannote
           # 5. 방 삭제
           # =========================================
           def delete_room(request, _call)
-            authorize!("assistant")
+            # authorize!("assistant")
 
             room = ::Room.find(request.id)
-            user_authority_level = SimulatedUserRoles.get_authority_level(Current.user_id)
+            # user_authority_level = SimulatedUserRoles.get_authority_level(Current.user_id)
 
-            if user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["admin"] ||
-               (user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["assistant"] &&
-                room.created_by == Current.user_id)
-              room.destroy!
-            else
-              raise GRPC::BadStatus.new(
-                GRPC::Core::StatusCodes::PERMISSION_DENIED,
-                "Permission denied: Insufficient authority to delete this room."
-              )
-            end
+            # if user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["admin"] ||
+            #    (user_authority_level >= SimulatedUserRoles::AUTHORITY_LEVELS["assistant"] &&
+            #     room.created_by == Current.user_id)
+            #   room.destroy!
+            # else
+            #   raise GRPC::BadStatus.new(
+            #     GRPC::Core::StatusCodes::PERMISSION_DENIED,
+            #     "Permission denied: Insufficient authority to delete this room."
+            #   )
+            # end
+
+            room.destroy! # 이거 검증 넣을때는 이거 삭제 해야함.
 
             Bannote::Studyroomservice::Room::V1::DeleteRoomResponse.new
 
